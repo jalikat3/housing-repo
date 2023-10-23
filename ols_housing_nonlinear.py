@@ -50,9 +50,9 @@ indices = torch.randperm(len(data))
 
 # specify train and test indicies
 train_indices = indices[:-num_test_samples]
-print(train_indicies.head())
+
 test_indices = indices[-num_test_samples:]
-print(test_indicies.head())
+
 
 # create tensors for test/train xss and yss
 x_train = torch.FloatTensor(xss[train_indices])
