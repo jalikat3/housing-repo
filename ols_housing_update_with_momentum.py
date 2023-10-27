@@ -15,22 +15,14 @@ from itertools import combinations
 # Read the named columns from the csv file into a dataframe.
 names = ['taxvaluedollarcnt','finishedsquarefeet12','lotsizesquarefeet','yearbuilt','landtaxvaluedollarcnt',
          'fullbathcnt','roomcnt','finishedsquarefeet50']
-         #'landtaxvaluedollarcnt','lotsizesquarefeet',
-         #'fullbathcnt','calculatedfinishedsquarefeet','yearbuilt','bedroomcnt']
-        # 'landtaxvaluedollarcnt'
-        # 'fips'
-        # 'finishedsquarefeet12','lotsizesquarefeet',
-        # 'fips','fullbathcnt','yearbuilt', 'calculatedfinishedsquarefeet',
-        # 'bedroomcnt', 'buildingqualitytypeid']
+
 # building quality is a maybe
 # choose square feet
 # if we need more data then load other files as well
 # goal 10-20 thousand
 # get a sensible data set
 
-#,'calculatedbathnbr','taxamount',
-#    'buildingqualitytypeid','yearbuilt','assessmentyear','finishedsquarefeet6','calculatedfinishedsquarefeet',
-#    'regionidneighborhood','bedroomcnt','basementsqft','lotsizesquarefeet']
+
 
 # put zeros if not exist in pandas import
 df = pd.read_csv('properties_2016.csv', low_memory=False,usecols=names)
@@ -39,15 +31,7 @@ print(df.count)
 df.dropna(axis =  0, how='any', subset=None, inplace=True)
 print("New count")
 print(df.count)
-#usecols = names, low_memory=False)
-#non_null_counts = df.groupby(list(df.columns)).size()
-#threshold=1000
-#valid_combos = non_null_counts[non_null_counts>=threshold].index
-#filtered_df = df.groupby(list(df.columns)).filter(lambda x: x.index in valid_combos)
-#print(filtered_df.count)
-#df.dropna(axis =  0, how='any', subset=None, inplace=True)
-#print(filtered_df.count)
-#quit()
+
 data = df.values # read data into a numpy array (as a list of lists)
 data = data[1:] # remove the first list which consists of the labels
 data = data.astype(float) # coerce the entries in the numpy array to floats
