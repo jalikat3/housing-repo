@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # ols.py                                                     SSimmons March 2018
+#                                                            JPurcell October 2023
+# Linear Model
 """
 Uses a neural net to find the ordinary least-squares regression model. Trains
 with batch gradient descent, and computes r^2 to gauge predictive quality.
