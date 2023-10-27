@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # ols.py                                                     SSimmons March 2018
+#                                                            Updated JPurcell October 2023
 """
 Uses a neural net to find the ordinary least-squares regression model. Trains
 with batch gradient descent, and computes r^2 to gauge predictive quality.
@@ -11,6 +12,7 @@ import torch.nn as nn
 from itertools import combinations
 
 # Read the named columns from the csv file into a dataframe.
+# These columns had the best results for row retention by trial-and-error
 names = ['taxvaluedollarcnt','finishedsquarefeet12','lotsizesquarefeet','yearbuilt','landtaxvaluedollarcnt',
          'fullbathcnt','roomcnt','finishedsquarefeet50']
          #'landtaxvaluedollarcnt','lotsizesquarefeet',
@@ -24,6 +26,7 @@ names = ['taxvaluedollarcnt','finishedsquarefeet12','lotsizesquarefeet','yearbui
 
 df = pd.read_csv('properties_2016.csv', low_memory=False,usecols=names)
 
+# remove rows with null values in the cells
 df.dropna(axis =  0, how='any', subset=None, inplace=True)
 
 data = df.values # read data into a numpy array (as a list of lists)
