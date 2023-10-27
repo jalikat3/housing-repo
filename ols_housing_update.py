@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # ols.py                                                     SSimmons March 2018
+#                                                            JPurcell October 2023
 """
 Uses a neural net to find the ordinary least-squares regression model. Trains
 with batch gradient descent, and computes r^2 to gauge predictive quality.
@@ -13,22 +14,13 @@ from itertools import combinations
 # Read the named columns from the csv file into a dataframe.
 names = ['taxvaluedollarcnt','finishedsquarefeet12','lotsizesquarefeet','yearbuilt','landtaxvaluedollarcnt',
          'fullbathcnt','roomcnt','finishedsquarefeet50']
-         #'landtaxvaluedollarcnt','lotsizesquarefeet',
-         #'fullbathcnt','calculatedfinishedsquarefeet','yearbuilt','bedroomcnt']
-        # 'landtaxvaluedollarcnt'
-        # 'fips'
-        # 'finishedsquarefeet12','lotsizesquarefeet',
-        # 'fips','fullbathcnt','yearbuilt', 'calculatedfinishedsquarefeet',
-        # 'bedroomcnt', 'buildingqualitytypeid']
+
 # building quality is a maybe
 # choose square feet
 # if we need more data then load other files as well
 # goal 10-20 thousand
 # get a sensible data set
 
-#,'calculatedbathnbr','taxamount',
-#    'buildingqualitytypeid','yearbuilt','assessmentyear','finishedsquarefeet6','calculatedfinishedsquarefeet',
-#    'regionidneighborhood','bedroomcnt','basementsqft','lotsizesquarefeet']
 
 # put zeros if not exist in pandas import
 df = pd.read_csv('properties_2016.csv', low_memory=False,usecols=names)
