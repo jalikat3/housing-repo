@@ -11,8 +11,8 @@ data cleansing operations may be needed, but overall I was able to download and 
 ## Overview
 There are a few different code files, but the one to run the graph properly is ols_nonlinear_plot.py.
 An additional download of DU lib will be neccesary. This can be found at: [Link text](https://github.com/sj-simmons/DUlib/blob/master/README.md#top)
->  - ols_linear.py - my code for the linear model
->  - ols_linear_with_momentum.py - added momentum to the model
+>  - ols_housing.py - my code for the linear model
+>  - ols_housing_update_with_momentum.py - added momentum to the model
 >  - ols_nonlinear_plot.py - run non-linear model with the graph
->  - ols_assign_6.py - turned in for Ames iowa dataset
+>  - ols_assign.py - turned in for Ames, Iowa 2008 housing dataset
   
