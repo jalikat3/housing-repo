@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # ols.py                                                     SSimmons March 2018
+#                                                            JPurcell October 2023
+# Machine Learning Assignment with old (Ames Iowa) dataset
 """
 Uses a neural net to find the ordinary least-squares regression model. Trains
 with batch gradient descent, and computes r^2 to gauge predictive quality.
@@ -32,25 +34,6 @@ data.div_(data.std(0))  # normalize
 xss = data[:,1:]
 yss = data[:,:1]
 
-# specify test percentage
-test_percentage = 0.2
-
-# calculate number of test samples
-num_test_samples = int(test_percentage * len(data))
-
-# randomize data to get random datapoints
-indices = torch.randperm(len(data))
-
-# specify train and test indicies
-train_indices = indices[:-num_test_samples]
-test_indices = indices[-num_test_samples:]
-
-# create tensors for test/train xss and yss
-x_train = torch.FloatTensor(xss[train_indices])
-y_train = torch.FloatTensor(yss[train_indices])
-x_test = torch.FloatTensor(xss[test_indices])
-y_test = torch.FloatTensor(yss[test_indices])
-
 
 # define a model class
 class NonLinearModel(nn.Module):
@@ -70,8 +53,7 @@ class NonLinearModel(nn.Module):
 model = NonLinearModel()
 print(model)
 #for name, param in model.named_parameters():
-  #print(name, param.size())
-#quit()
+
 z_parameters = []
 for param in model.parameters():
   z_parameters.append(param.data.clone())
@@ -80,27 +62,24 @@ for param in z_parameters:
   
 criterion = nn.MSELoss()
 num_examples = len(data)
-batch_size = 30
-learning_rate = 0.000355
-epochs = 30
+epochs = 500
+batch_size = 40
+learning_rate = 0.01
 momentum = .899
 
 model.train()
-# train the model with momentum
+total_loss=0
 for epoch in range(epochs):
-    #accum_loss = 0
-    model.train()
-    for _ in range(num_examples // batch_size):
-        indices = torch.randperm(num_examples)[:batch_size]
 
-        #yss_mb = yss[indices]
-        #yhatss_mb = model(xss[indices])
-        outputs = model(x_train)
-        loss = criterion(outputs, y_train)
-        #loss = criterion(yhatss_mb, yss_mb)
+    indices = torch.randperm(num_examples)[:batch_size]
+    for _ in range(0, len(indices), batch_size):
+
+        yss_mb = yss[indices]
+        yhatss_mb = model(xss[indices])
+
+        loss = criterion(yhatss_mb, yss_mb)
         model.zero_grad()
         loss.backward()  
-        #accum_loss=accum_loss+loss.item()
 
         for i, (z_param, param) in enumerate(zip(z_parameters, model.parameters())):
           z_parameters[i] = momentum * z_param + param.grad.data
@@ -108,31 +87,9 @@ for epoch in range(epochs):
           
     with torch.no_grad():
       total_loss = criterion(model(xss), yss).item()
-          #total_loss = criterion(model(xss), yss).item()
           
-    print('epoch: {0}, loss: {1:11.8f}'.format(epoch+1,total_loss*batch_size/num_examples))
-
-# compute R-squared for training data
-
-with torch.no_grad():
-    train_outputs = model(x_train)
-    ss_residual = ((y_train - train_outputs) ** 2).sum()
-    ss_total = ((y_train - y_train.mean()) ** 2).sum()
-    r_squared_train = 1 - (ss_residual / ss_total)
-
-print(f'R-squared (Training Data): {r_squared_train.item():.4f}')
-
-model.eval() 
-with torch.no_grad():
-    test_outputs = model(x_test)
-    test_loss = criterion(test_outputs, y_test)
-    ss_residual = ((y_test - test_outputs) ** 2).sum()
-    ss_total = ((y_test - y_test.mean()) ** 2).sum()
-    r_squared_test = 1 - (ss_residual / ss_total)
-    
-
-print(f'R-squared (Test Data): {r_squared_test.item():.4f}')
-print(f'Test Loss: {test_loss.item():.4f}')
+    print('epoch: {0}, loss: {1:11.8f}'.format(epoch+1,total_loss*batch_size/num_examples)
+  
 
 print("total number of examples:", num_examples, end='; ')
 print("batch size:", batch_size)
