@@ -5,7 +5,7 @@ conference in October 2023.
 The code is based off of our given code in class, but I updated the code to meet the program requirements, and the dataset.
 The current data set can be found with this link:
 [Link](https://www.kaggle.com/c/zillow-prize-1)
-If downloading, placethe dataset in the same folder as the code to run properly. Depending on your system, additional
+If downloading, place the dataset in the same folder as the code to run properly. Depending on your system, additional
 data cleansing operations may be needed, but overall I was able to download and run properly.
 
 ## Overview
